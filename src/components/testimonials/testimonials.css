@@ -1,0 +1,28 @@
+.outer__container{
+    padding: 2rem;
+    background: var(--color-dark);
+    border-radius: 1rem;
+}
+.inner__container{
+    padding: 2rem;
+    border-bottom: 1px solid #ffffff;
+}
+img{
+    height: 300px;
+    margin-bottom: 1rem;border-radius: 2rem;
+}
+.job_desc{
+    display: flex;
+    justify-content: space-around;
+}
+
+.inner_c_buttons{
+    display: flex;
+    height: 3.3rem;
+}
+button{
+    margin-right: 1rem;
+}
+#testimonials{
+    padding: 1rem;
+}

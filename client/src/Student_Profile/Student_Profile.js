@@ -54,7 +54,7 @@ export default function ProfilePage(props) {
                 <p className="text-muted mb-1">Frontend MERN Developer</p>
                 <p className="text-muted mb-4">H#38, St#17 Sector A</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <Link to={'/rider/updateRiderProfile'} >
+                  <Link to={'/rider/updateRiderProfile'} state={{bio: studentInfo.student.bio, name: studentInfo.student.name, email: studentInfo.student.email, mobile: studentInfo.student.mobilenumber, address: studentInfo.student.address}} >
                   <MDBBtn className="updatebutton">Update</MDBBtn>
                   </Link>
                 </div>
@@ -71,7 +71,7 @@ export default function ProfilePage(props) {
                     <MDBCardText>Full Name</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">GM</MDBCardText>
+                    <MDBCardText className="text-muted">{studentInfo.student.name}</MDBCardText>
                   </MDBCol>
                   
                 </MDBRow>
@@ -81,7 +81,7 @@ export default function ProfilePage(props) {
                     <MDBCardText>Email</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">this@email.com</MDBCardText>
+                    <MDBCardText className="text-muted">{studentInfo.student.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -90,7 +90,7 @@ export default function ProfilePage(props) {
                     <MDBCardText>Phone</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">03328553987</MDBCardText>
+                    <MDBCardText className="text-muted">{studentInfo.student.mobilenumber}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
@@ -99,7 +99,7 @@ export default function ProfilePage(props) {
                     <MDBCardText>Address</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">House number this</MDBCardText>
+                    <MDBCardText className="text-muted">{studentInfo.student.address}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
               </MDBCardBody>

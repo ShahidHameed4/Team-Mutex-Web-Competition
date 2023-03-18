@@ -1,78 +1,118 @@
-import { Jwt } from "jsonwebtoken";
-import UserInfo from "../models/UserInfo.js";
-import userExperience from "../models/UserQualification";
-import userSkills from "../models/UserSkills";
-import asynchandler from "express-async-handler";
+import User from '../models/UserInfo.js'
+import asyncHandler from 'express-async-handler'
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
-import userQualification from "../models/UserQualification.js";
+// @desc    Register new user
+// @route   POST /api/users
+// @access  Public
+const registerUser = asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body
 
-const create = asynchandler(async (req, res) => {
-    try {
-        if(UserInfo.find({email:req.body.email})){
-            res.status(301).json({
-                message: "Email Already Exists",
-            });
+  if (!name || !email || !password) {
+    res.status(400)
+    throw new Error('Please add all fields')
+  }
 
-        }
-        else{
-            const posts = await UserInfo.create({
-                name: req.body.name,
-                city: req.body.city,
-                bio: req.body.bio,
-                role: req.body.role,
-                imgLink: req.body.imgLink,
-                email: req.body.email,
-                password: req.body.password,
-                mobile: req.body.mobile,
-                });
-            
-                res.status(201);
-        }
-        
-    } catch (err) {
-        res.status(400);
-        console.log(err);
-    }
-    }
-);
+  // Check if user exists
+  const userExists = await User.findOne({ email })
 
-const login = asynchandler( async(req,res)=>{
-    console.log(req.body.email)
-    const posts = UserInfo.find({ email:req.body.email })
-  
-    res.status(201).json({
-      
-      token: generateToken(posts._id)
-  
-    })
+  if (userExists) {
+    res.status(400)
+    throw new Error('User already exists')
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
+  req.body.password = hashedPassword;
+  // Create user
+  const user = await User.create({
+    name:req.body.name,
+    email:req.body.email,
+    password:req.body.password,
+    bio:req.body.bio,
+    address:req.body.address,
+    mobile:req.body.mobile,
+    role:req.body.role,
+    imgLink:req.body.imgLink,
+    city:req.body.city
+
   })
 
-const get = asynchandler(async (req, res) => {
-    if (req.UserInfo) {
+  if (user) {
+    res.status(201).json({
+      message: 'User created successfully',
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid user data')
+  }
+})
+
+// @desc    Authenticate a user
+// @route   POST /api/users/login
+// @access  Public
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body
+
+  // Check for user email
+  const user = await User.findOne({ email })
+
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid credentials')
+  }
+})
+
+// @desc    Get user data
+// @route   GET /api/users/me
+// @access  Private
+const getMe = asyncHandler(async (req, res) => {
+  res.status(200).json(req.user)
+})
+
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  })
+}
 
 
-        var skills = userSkills.find({ userId: req.UserInfo._id });
-        var experience = userExperience.find({ userId: req.UserInfo._id });
-        var qualification = userQualification.find({ userId: req.UserInfo._id });
-        res.status(200).json({
-            _id: req.UserInfo._id,
-            name: req.UserInfo.name,
-            city: req.UserInfo.city,
-            bio: req.UserInfo.bio,
-            role: req.UserInfo.role,
-            imgLink: req.UserInfo.imgLink,
-            email: req.UserInfo.email,
-            mobile: req.UserInfo.mobile,
+const profile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.body.id)
 
-            skills: skills,
-            experience: experience,
-            qualification: qualification,
-        });
-    } else {
-        res.status(401);
-    }
-});
+  if (user) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      mobileNumber: user.mobile,
+      address: user.city,
+      role: user.role,
+      imgLink: user.imgLink,
+      bio: user.bio,
 
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
 
 
 
+export  {
+  registerUser,
+  loginUser,
+  getMe,
+  profile
+}

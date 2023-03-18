@@ -1,4 +1,4 @@
-import { Mongoose } from "mongoose";
+import Mongoose from "mongoose";
 const Schema = Mongoose.Schema;
 const UserSkills = new Schema({
     skill: { type: String, required: true, max: [127, "Max Length is 127 characters"] },

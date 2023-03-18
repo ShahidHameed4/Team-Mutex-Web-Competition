@@ -14,5 +14,5 @@ const UserInfo = new Schema({
   timestamps: true
 })
 
-const resi = mongoose.model('UserInfo', UserInfo)
-export default resi
+const userInfo = mongoose.model('UserInfo', UserInfo)
+export default userInfo

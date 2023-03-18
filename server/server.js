@@ -7,7 +7,7 @@ import cors from 'cors' // important for recieving api calls
 // import PropertyRouter from './routes/Property.js'
 // import ContactRouter from './routes/ContactUs.js'
 import * as dotenv from 'dotenv';
-
+import userRouter from './routes/User.js'
 
 dotenv.config();
 import connectDB from './Database/db.js'
@@ -18,9 +18,9 @@ app.use(express.static('public'))
 app.use(express.json())
 
 
-
+app.use('/api/user', userRouter)
 // app.use('/api/Annoucement', AnnoucementRouter)
-app.use('/api/Residents', ResidentRouter)
+// app.use('/api/Residents', ResidentRouter)
 // app.use('/api/Complaint', ComplaintRouter)
 // app.use('/api/Property', PropertyRouter)
 // app.use('api/contactus', ContactRouter)
@@ -29,4 +29,4 @@ app.use('/api/Residents', ResidentRouter)
 
 
 
-app.listen(5000)
+app.listen(3001)

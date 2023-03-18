@@ -8,3 +8,7 @@ const UserExperience = new Schema({
     timefrom: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
     description: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
 });
+
+
+const userExperience = mongoose.model("UserExperience", UserExperience);
+export default userExperience;

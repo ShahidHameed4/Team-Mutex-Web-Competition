@@ -1,6 +1,6 @@
-import { Mongoose } from "mongoose";
-const Schema = Mongoose.Schema;
-const UserExperience = new Schema({
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
+const userQualification = new Schema({
     title: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
     company: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
     userId: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
@@ -8,5 +8,5 @@ const UserExperience = new Schema({
     graduationDate: { type: String, required: true, max: [127, "Max Length is 127 characters"] },
 });
 
-const userExperience = Mongoose.model("UserExperience", UserExperience);
-export default userExperience;
+const UserQualification = mongoose.model("UserQualification", userQualification);
+export default UserQualification;

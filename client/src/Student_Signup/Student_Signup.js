@@ -68,11 +68,7 @@ export default function Student_Signup() {
         toast.error('Unrelated special characters not allowed in Address field', {position: toast.POSITION.TOP_RIGHT});
         return false;
       }
-      // else if (!(cniccheck.test(cnicValue)))
-      // {
-      //   toast.error('Invalid Cnic number', {position: toast.POSITION.TOP_RIGHT});
-      //   return false;
-      // }
+      
       else if ((!(passwordValue.match(lowercasecheck))) || (!(passwordValue.match(uppercasecheck))) || (!(passwordValue.match(numbercheck))) || passwordValue.length < 8)
       {
         toast.error('Invalid Password, Password must contain atleast an uppercase letter, a lowercase letter, a number and MUST be atleast 8 characters in length.', {position: toast.POSITION.TOP_RIGHT});
@@ -93,10 +89,10 @@ export default function Student_Signup() {
         let password = passwordValue;
 
 
-          await fetch(`http://13.233.58.41:3001/newSignup`,{
+          await fetch(`http://localhost:3001/newStudentSignup`,{
 
           method: 'post',
-          body: JSON.stringify({tag , name, email, mobilenumber, address, password, link}),
+          body: JSON.stringify({tag , name, email, mobilenumber, address, password}),
           headers: {'Content-Type': 'Application/json'}
 
         }).then ((response) => {
@@ -109,7 +105,7 @@ export default function Student_Signup() {
           else if (response.status === 201)
           {
             toast.success('Signup Successful!', {position: toast.POSITION.TOP_RIGHT});
-            navigate('/Login');    
+            navigate('/StudentLogin');    
           }
           else
           {

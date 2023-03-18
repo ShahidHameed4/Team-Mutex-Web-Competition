@@ -47,7 +47,7 @@ export default function Student_Login()
         let email = emailValue;
         let password = passwordValue;
 
-          await fetch(`http://13.233.58.41:3001/UserLoginAuthenticate`,{
+          await fetch(`http://localhost:3001/UserLoginAuthenticate`,{
 
           method: 'post',
           body: JSON.stringify({email, password}),
@@ -58,7 +58,7 @@ export default function Student_Login()
           if (response.status === 200)
           {
             toast.success('Login Authenticated!', {position: toast.POSITION.TOP_RIGHT});
-            navigate('/Home',{state:{email : email}});    
+            navigate('/StudentHome',{state:{email : email}});    
           }
           else
           {
@@ -72,7 +72,7 @@ export default function Student_Login()
   }
 
   const StdSignup = async event => {
-    navigate('/Signup'); 
+    navigate('/StudentSignup'); 
   }
 
 

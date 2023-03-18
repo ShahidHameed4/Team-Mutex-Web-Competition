@@ -5,7 +5,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import { MDBCol, MDBContainer,  MDBRow,  MDBCard,  MDBCardText,  MDBCardBody,  MDBCardImage,  MDBBtn, MDBInput, } from 'mdb-react-ui-kit';
 import logo from '../Student_Profile/facelogo.png';
-import './StudentProfileUpdate.css';
+import './OrgProfileUpdate.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye,faFileInvoice} from "@fortawesome/free-solid-svg-icons"
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,7 +17,7 @@ export default function ProfilePage(props) {
   const location = useLocation();
   const data = location.state;
 
-  const[studentInfo,setStudentInfo] = React.useState([{}])
+  const[orgInfo,setorgInfo] = React.useState([{}])
 
     const navigate = useNavigate();
     const [bioValue,setbioValue] = React.useState(data.bio);
@@ -25,12 +25,6 @@ export default function ProfilePage(props) {
     const [emailValue,setemailValue] = React.useState(data.email);
     const [mobileValue,setmobileValue] = React.useState(data.mobilenumber);
     const [addressValue,setaddressValue] = React.useState(data.address);
-
-    const [instituteValue,setinstituteValue] = React.useState();
-    const [degreevalue,setdegreevalue] = React.useState();
-
-    const [orgvalue,setorgvalue] = React.useState();
-    const [lengthvalue,setlengthvalue] = React.useState();
 
     const validateInput = async event => {
 
@@ -86,47 +80,9 @@ export default function ProfilePage(props) {
             resolve => setTimeout(resolve, ms)
           );
          delay(150000);
-        navigate('/StudentProfile',{state:{email : email}});
+        navigate('/OrgProfile',{state:{email : email}});
 
       }
-    }
-
-
-    const AddEducation = async() => {
-      let studentemail = emailValue;
-
-        (async () =>
-      {
-          await fetch(`http://localhost:3001/AddStudentEducation`,{
-
-            method: 'put',
-            body: JSON.stringify({email: studentemail, institute: instituteValue,degree: degreevalue}),
-            headers: {'Content-Type': 'Application/json'}
-  
-        });
-
-        toast.success('Education Added!', {position: toast.POSITION.TOP_RIGHT});
-
-     })();
-    }
-
-
-    const AddExperience = async() => {
-      let studentemail = emailValue;
-
-        (async () =>
-      {
-          await fetch(`http://localhost:3001/AddStudentExperience`,{
-
-            method: 'put',
-            body: JSON.stringify({email: studentemail, organization: orgvalue,length: lengthvalue}),
-            headers: {'Content-Type': 'Application/json'}
-  
-        });
-
-        toast.success('Experience Added!', {position: toast.POSITION.TOP_RIGHT});
-
-     })();
     }
 
 
@@ -137,7 +93,7 @@ export default function ProfilePage(props) {
         await fetch(`http://localhost:3001/profile/${emailValue}`).then(
           response => response.json()
         ).then(
-          data => setStudentInfo(data))
+          data => setorgInfo(data))
      })();
   
     }, [emailValue]);
@@ -151,7 +107,7 @@ export default function ProfilePage(props) {
 
   return (
     <div>
-    {(typeof studentInfo.student === 'undefined') ? (
+    {(typeof orgInfo.org === 'undefined') ? (
       <p> Loading... </p>
     ) : (
     <section style={{ backgroundColor: '#eee' }}>
@@ -227,95 +183,6 @@ export default function ProfilePage(props) {
             </MDBCol>
         </MDBRow>
 
-                {/* education */}
-                <MDBRow>
-          <MDBCol lg="6">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-              <MDBRow md="5">
-                      <MDBCardText id="qualificationh1" className="text-muted">Education</MDBCardText>
-                    
-                  </MDBRow>
-                  <hr />
-                  {(typeof studentInfo.student.education === 'undefined') ? (
-                      <p> Loading... </p>
-                    ) : (
-                      studentInfo.student.education.map((edu,i) => (
-                        
-                        <MDBRow key={i}>
-                          <MDBCol sm="3">
-                            <MDBCardText>{edu.institute}</MDBCardText>
-                          </MDBCol>
-                          <MDBCol sm="9">
-                            <MDBCardText className="text-muted">{edu.degree}</MDBCardText>
-                          </MDBCol>
-                        </MDBRow>
-                        
-                      ))
-                      
-                    )}
-                  <hr />
-                  <hr />
-                  <MDBRow md="5">
-                  <MDBInput wrapperClass='mb-4' label='Institute' id='formControlLg' type='institute' size="lg" value={instituteValue}  onChange={(e) => setinstituteValue(e.target.value)}/>
-                  </MDBRow>
-                  <MDBRow md="5">
-                <MDBInput wrapperClass='mb-4' label='Degree' id='formControlLg' type='institute' size="lg" value={degreevalue} onChange={(e) => setdegreevalue(e.target.value)}/>
-                 </MDBRow>
-                  <MDBRow md="5">
-                    <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={AddEducation}>Add Education</MDBBtn>
-                    
-                  </MDBRow>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-
-            {/* experience */}
-            <MDBCol lg="6">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-              <MDBRow md="5">
-                      <MDBCardText id="qualificationh1" className="text-muted">Experience</MDBCardText>
-                    
-                  </MDBRow>
-                  <hr />
-                  {(typeof studentInfo.student.experience === 'undefined') ? (
-                      <p> Loading... </p>
-                    ) : (
-                      studentInfo.student.experience.map((exp,i) => (
-                        
-                        <MDBRow key={i}>
-                          <MDBCol sm="3">
-                            <MDBCardText>{exp.organization}</MDBCardText>
-                          </MDBCol>
-                          <MDBCol sm="9">
-                            <MDBCardText className="text-muted">{exp.length} years</MDBCardText>
-                          </MDBCol>
-                        </MDBRow>
-                        
-                      ))
-
-                      
-                      
-                    )}
-                  <hr />
-                  <hr />
-                  <MDBRow md="5">
-                  <MDBInput wrapperClass='mb-4' label='Organization' id='formControlLg' type='org' size="lg" value={orgvalue}  onChange={(e) => setorgvalue(e.target.value)}/>
-                  </MDBRow>
-                  <MDBRow md="5">
-                <MDBInput wrapperClass='mb-4' label='Length of Employment' id='formControlLg' type='length' size="lg" value={lengthvalue} onChange={(e) => setlengthvalue(e.target.value)}/>
-                 </MDBRow>
-                  <MDBRow md="5">
-                    <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={AddExperience}>Add Education</MDBBtn>          
-                  </MDBRow>
-
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-            
-
 
 
 
@@ -333,8 +200,8 @@ export default function ProfilePage(props) {
                     <FontAwesomeIcon className="deliveryicon" icon={faFileInvoice} bounce size='4x'/>
                     </div>
                         <MDBCardText className="text-end">
-                            <h3>{studentInfo.student.applications}</h3>
-                            <p className="mb-0">Applications</p>
+                            <h3>{orgInfo.org.postnumber}</h3>
+                            <p className="mb-0">Job Posts</p>
                         </MDBCardText>
                     </div>
                 </MDBCardBody>
@@ -349,7 +216,7 @@ export default function ProfilePage(props) {
                     <FontAwesomeIcon className="ratingicon" icon={faEye} beat size='4x'/>
                     </div>
                         <MDBCardText className="text-end">
-                            <h3>{studentInfo.student.profileviews}</h3>
+                            <h3>{orgInfo.org.profileviews}</h3>
                             <p className="mb-0">Profile Views</p>
                         </MDBCardText>
                     </div>

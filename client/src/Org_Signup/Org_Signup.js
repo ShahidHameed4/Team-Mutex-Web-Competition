@@ -89,7 +89,7 @@ export default function Org_Signup() {
         let password = passwordValue;
 
 
-          await fetch(`http://13.233.58.41:3001/newSignup`,{
+          await fetch(`http://localhost:3001/newOrgSignup`,{
 
           method: 'post',
           body: JSON.stringify({tag , name, email, mobilenumber, address, password}),
@@ -105,7 +105,7 @@ export default function Org_Signup() {
           else if (response.status === 201)
           {
             toast.success('Signup Successful!', {position: toast.POSITION.TOP_RIGHT});
-            navigate('/Login');    
+            navigate('/OrgLogin');    
           }
           else
           {
@@ -162,7 +162,7 @@ export default function Org_Signup() {
                   </MDBRow>
 
                   <div className="d-flex justify-content-center pt-3">
-                    <Link to='/Login'>
+                    <Link to='/OrgLogin'>
                     <MDBBtn outline color='black' size='lg' style={{color: "#000000"}}>Login Instead</MDBBtn>
                     </Link>
                     <MDBBtn className='ms-2' color='black' size='lg' onClick={validateSignup}>Submit form</MDBBtn>

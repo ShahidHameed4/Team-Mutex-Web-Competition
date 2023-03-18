@@ -168,7 +168,7 @@ export default function Student_Signup() {
                   </MDBRow>
 
                   <div className="d-flex justify-content-center pt-3">
-                    <Link to='/Login'>
+                    <Link to='/StudentLogin'>
                     <MDBBtn outline color='black' size='lg' style={{color: "#000000"}}>Login Instead</MDBBtn>
                     </Link>
                     <MDBBtn className='ms-2' color='black' size='lg' onClick={validateSignup}>Submit form</MDBBtn>

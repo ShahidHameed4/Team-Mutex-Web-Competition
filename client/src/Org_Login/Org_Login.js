@@ -72,7 +72,7 @@ export default function Org_Login()
   }
 
   const StdSignup = async event => {
-    navigate('/Signup'); 
+    navigate('/OrgSignup'); 
   }
 
 

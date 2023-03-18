@@ -23,7 +23,7 @@ export default function Routing()
 
         <Routes>
 
-        <Route path='/' element={<Navigate to="/" replace />} />
+        <Route path='/' element={<Navigate to="/StudentLogin" replace />} />
           
           <Route path='/OrgLogin' element={<div><OrgLogin /></div>} />
 

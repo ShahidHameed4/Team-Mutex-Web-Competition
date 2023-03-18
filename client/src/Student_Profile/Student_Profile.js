@@ -7,9 +7,9 @@ import {
   MDBCol, MDBContainer,  MDBRow,  MDBCard,  MDBCardText,  MDBCardBody,  MDBCardImage,  MDBBtn,
 } from 'mdb-react-ui-kit';
 import logo from "./facelogo.png";
-import './Profile.css';
+import './Student_Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar,faWallet, faMotorcycle} from "@fortawesome/free-solid-svg-icons"
+import { faEye, faFileInvoice} from "@fortawesome/free-solid-svg-icons"
 import { Link,  useLocation } from 'react-router-dom';
 
 export default function ProfilePage(props) {
@@ -17,27 +17,27 @@ export default function ProfilePage(props) {
   const location = useLocation();
   const data = location.state;
 
-  // const[emailprop] = React.useState(data.email);
-  // const[riderInfo,setRiderInfo] = React.useState([{}])
+  const[emailprop] = React.useState(data.email);
+  const[studentInfo,setStudentInfo] = React.useState([{}])
   
 
-  // useEffect(() => {
-  //   (async () =>
-  //   {
-  //     await fetch(`http://13.233.58.41:3001/profile/${emailprop}`).then(
-  //       response => response.json()
-  //     ).then(
-  //       data => setRiderInfo(data))
-  //  })();
+  useEffect(() => {
+    (async () =>
+    {
+      await fetch(`http://13.233.58.41:3001/profile/${emailprop}`).then(
+        response => response.json()
+      ).then(
+        data => setStudentInfo(data))
+   })();
 
-  // }, [emailprop]);
+  }, [emailprop]);
 
   return (
     <div>
 
-    {/* {(typeof riderInfo.rider === 'undefined') ? (
+    {(typeof studentInfo.student === 'undefined') ? (
       <p> Loading... </p>
-    ) : ( */}
+    ) : (
       <section style={{ backgroundColor: '#eee' }}>
       <MDBContainer className="py-5">
         <MDBRow>
@@ -45,7 +45,7 @@ export default function ProfilePage(props) {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://images.app.goo.gl/mCK1tq79cJ63G6hL8"
+                  src={logo}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: '150px' }}
@@ -54,9 +54,9 @@ export default function ProfilePage(props) {
                 <p className="text-muted mb-1">Frontend MERN Developer</p>
                 <p className="text-muted mb-4">H#38, St#17 Sector A</p>
                 <div className="d-flex justify-content-center mb-2">
-                  {/* <Link to={'/rider/updateRiderProfile'} state={{bio: riderInfo.rider.bio, name: riderInfo.rider.name, email: riderInfo.rider.email, mobile: riderInfo.rider.mobilenumber, cnic: riderInfo.rider.cnic, address: riderInfo.rider.address, deliveries: riderInfo.rider.deliveries, rating: riderInfo.rider.rating, wallet:riderInfo.rider.wallet}}> */}
+                  <Link to={'/rider/updateRiderProfile'} >
                   <MDBBtn className="updatebutton">Update</MDBBtn>
-                  {/* </Link> */}
+                  </Link>
                 </div>
               </MDBCardBody>
             </MDBCard>
@@ -96,15 +96,6 @@ export default function ProfilePage(props) {
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>Photo Link</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted" > https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2520picture%2F&psig=AOvVaw1EVbsSMtv7X7EkvbGi5R3_&ust=1679212088111000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCIjSg9L-5P0CFQAAAAAdAAAAABAE</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
                     <MDBCardText>Address</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
@@ -116,14 +107,84 @@ export default function ProfilePage(props) {
             </MDBCol>
         </MDBRow>
 
-            <MDBRow >
+        {/* education */}
+        <MDBRow>
+          <MDBCol lg="6">
+            <MDBCard className="mb-4">
+              <MDBCardBody>
+              <MDBRow md="5">
+                      <MDBCardText id="qualificationh1" className="text-muted">Education</MDBCardText>
+                    
+                  </MDBRow>
+                  <hr />
+                  {(typeof studentInfo.student.education === 'undefined') ? (
+                      <p> Loading... </p>
+                    ) : (
+                      studentInfo.student.education.map((edu,i) => (
+                        
+                        <MDBRow key={i}>
+                          <MDBCol sm="3">
+                            <MDBCardText>{edu.institute}</MDBCardText>
+                          </MDBCol>
+                          <MDBCol sm="9">
+                            <MDBCardText className="text-muted">{edu.degree}</MDBCardText>
+                          </MDBCol>
+                        </MDBRow>
+                        
+                      ))
+                      
+                    )}
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+
+            {/* experience */}
+            <MDBCol lg="6">
+            <MDBCard className="mb-4">
+              <MDBCardBody>
+              <MDBRow md="5">
+                      <MDBCardText id="qualificationh1" className="text-muted">Experience</MDBCardText>
+                    
+                  </MDBRow>
+                  <hr />
+                  {(typeof studentInfo.student.experience === 'undefined') ? (
+                      <p> Loading... </p>
+                    ) : (
+                      studentInfo.student.experience.map((exp,i) => (
+                        
+                        <MDBRow key={i}>
+                          <MDBCol sm="3">
+                            <MDBCardText>{exp.organization}</MDBCardText>
+                          </MDBCol>
+                          <MDBCol sm="9">
+                            <MDBCardText className="text-muted">{exp.length} years</MDBCardText>
+                          </MDBCol>
+                        </MDBRow>
+                        
+                      ))
+                      
+                    )}
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+          </MDBRow>
+            
+
+
+
+
+
+
+
+
+            <MDBRow id ="statrow" >
             <MDBCol lg="4">
             <MDBCard className="col-xl-4 col-sm-8 col-12 mb-4" style={{marginRight : 50  ,maxWidth : 350}}>
               <MDBCardBody>
                 
                     <div className="d-flex justify-content-between px-md-4">
                     <div className="align-self-center">
-                    <FontAwesomeIcon className="deliveryicon" icon={faMotorcycle} bounce size='4x'/>
+                    <FontAwesomeIcon className="deliveryicon" icon={faFileInvoice} bounce size='4x'/>
                     </div>
                         <MDBCardText className="text-end">
                             <h3>14</h3>
@@ -139,7 +200,7 @@ export default function ProfilePage(props) {
               <MDBCardBody>
                 <div className="d-flex justify-content-between px-md-4">
                     <div className="align-self-center">
-                    <FontAwesomeIcon className="ratingicon" icon={faStar} beat size='4x'/>
+                    <FontAwesomeIcon className="ratingicon" icon={faEye} beat size='4x'/>
                     </div>
                         <MDBCardText className="text-end">
                             <h3>24</h3>
@@ -150,7 +211,7 @@ export default function ProfilePage(props) {
                 </MDBCard>
                 </MDBCol>
 
-                <MDBCol lg="4">
+                {/* <MDBCol lg="4">
                <MDBCard className="col-xl-4 col-sm-6 col-18 mb-4" style={{maxWidth : 350}}>
               <MDBCardBody>
                 <div className="d-flex justify-content-between px-md-4" >
@@ -164,13 +225,13 @@ export default function ProfilePage(props) {
                     </div>
                 </MDBCardBody>
             </MDBCard>
-            </MDBCol>
+            </MDBCol> */}
         </MDBRow>
         
       </MDBContainer>
     </section>
     
-    {/* )} */}
+     )} 
 
 </div>
 

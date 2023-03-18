@@ -1,0 +1,31 @@
+.updatebutton{
+    background-color: rgb(0, 0, 0) !important;
+    right:5px;
+    border-radius: 5px;
+}
+
+.deliveryicon{
+    right:5px;
+    color : rgb(24, 140, 202);
+}
+S
+.walleticon{
+    right:5px;
+    color : red !important;
+}
+
+.ratingicon{
+    right:5px;
+    color : rgb(255, 187, 0);
+}
+
+#qualificationh1{
+    text-align: center;
+    font-size: larger;
+    font-weight: bolder;
+    color: black;
+}
+
+#statrow{
+    justify-content: center;
+}

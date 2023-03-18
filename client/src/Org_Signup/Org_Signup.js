@@ -20,7 +20,6 @@ export default function Org_Signup() {
     const [nameValue,setnameValue] = React.useState();
     const [emailValue,setemailValue] = React.useState();
     const [contactValue,setcontactValue] = React.useState();
-    const [linkValue,setlinkValue] = React.useState();
     const [locationValue,setlocationValue] = React.useState();
     const [passwordValue,setpasswordValue] = React.useState();
     const [cpassValue,setcpassValue] = React.useState();
@@ -88,13 +87,12 @@ export default function Org_Signup() {
         let mobilenumber = contactValue;
         let address = locationValue;
         let password = passwordValue;
-        let link = linkValue;
 
 
           await fetch(`http://13.233.58.41:3001/newSignup`,{
 
           method: 'post',
-          body: JSON.stringify({tag , name, email, mobilenumber, address, password, link}),
+          body: JSON.stringify({tag , name, email, mobilenumber, address, password}),
           headers: {'Content-Type': 'Application/json'}
 
         }).then ((response) => {
@@ -143,17 +141,7 @@ export default function Org_Signup() {
                 <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
                   <h3 className="mb-5 md-6 text-uppercase fw-bold" style={{color: "#000000"}}><span>Organization Signup Form</span></h3>
 
-                  <MDBRow>
-
-                    <MDBCol md='6'>
                       <MDBInput wrapperClass='mb-4' label='Orgnization Name' size='lg' id='name' type='text' value={nameValue}  onChange={(e) => setnameValue(e.target.value)}/>
-                    </MDBCol>
-
-                    <MDBCol md='6'>
-                      <MDBInput wrapperClass='mb-4' label='Photo Link (Optional)' size='lg' id='link' type='text' value={linkValue} onChange={(e) => setlinkValue(e.target.value)}/>
-                    </MDBCol>
-
-                  </MDBRow>
 
                   <MDBInput wrapperClass='mb-4' label='About (3-4 words)' size='lg' id='bio' type='text' value={aboutValue} onChange={(e) => setaboutValue(e.target.value)}/>
 

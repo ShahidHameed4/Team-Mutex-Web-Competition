@@ -20,7 +20,6 @@ export default function Student_Signup() {
     const [nameValue,setnameValue] = React.useState();
     const [emailValue,setemailValue] = React.useState();
     const [mobileValue,setmobileValue] = React.useState();
-    const [linkValue,setlinkValue] = React.useState();
     const [addressValue,setaddressValue] = React.useState();
     const [passwordValue,setpasswordValue] = React.useState();
     const [cpassValue,setcpassValue] = React.useState();
@@ -92,7 +91,6 @@ export default function Student_Signup() {
         let mobilenumber = mobileValue;
         let address = addressValue;
         let password = passwordValue;
-        let link = linkValue;
 
 
           await fetch(`http://13.233.58.41:3001/newSignup`,{
@@ -105,7 +103,7 @@ export default function Student_Signup() {
 
           if (response.status === 300)
           {
-            toast.error('A user already exists with such CNIC or Email', {position: toast.POSITION.TOP_RIGHT});
+            toast.error('A user already exists with such Email', {position: toast.POSITION.TOP_RIGHT});
             return false;
           }
           else if (response.status === 201)
@@ -147,17 +145,13 @@ export default function Student_Signup() {
                 <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
                   <h3 className="mb-5 md-6 text-uppercase fw-bold" style={{color: "#000000"}}><span>Student / Researcher Signup Form</span></h3>
 
-                  <MDBRow>
+             
 
-                    <MDBCol md='6'>
+                
                       <MDBInput wrapperClass='mb-4' label='Full Name' size='lg' id='name' type='text' value={nameValue}  onChange={(e) => setnameValue(e.target.value)}/>
-                    </MDBCol>
 
-                    <MDBCol md='6'>
-                      <MDBInput wrapperClass='mb-4' label='Photo Link (Optional)' size='lg' id='link' type='text' value={linkValue} onChange={(e) => setlinkValue(e.target.value)}/>
-                    </MDBCol>
 
-                  </MDBRow>
+                
 
                   <MDBInput wrapperClass='mb-4' label='Tagline (3-4 words)' size='lg' id='bio' type='text' value={tagValue} onChange={(e) => settagValue(e.target.value)}/>
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import Signup from './Org_Signup/Org_Signup';
 import Login from './Org_Login/Org_Login';
-import Profile from './Profile/Profile';
+import Profile from './Student_Profile/Student_Profile';
 import Footer from './Footer/Footer';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import { ToastContainer} from 'react-toastify';
